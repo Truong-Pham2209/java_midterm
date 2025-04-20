@@ -1,0 +1,31 @@
+<div class="container py-5">
+    <!-- Danh mục sản phẩm -->
+    <div class="container category-container mb-5 bg-light py-4 rounded">
+        <h2 class="mb-4 text-start">Danh mục sản phẩm</h2>
+        <div class="row gx-2 gy-3 category-list">
+            <div class="col-6 col-md-4 col-lg-2" *ngFor="let category of categories">
+                <category-card [category]="category"></category-card>
+            </div>
+        </div>
+    </div>
+
+    <!-- Nhãn hàng -->
+    <div class="container brand-container mb-5 bg-light py-4 rounded">
+        <h2 class="mb-4 text-start">Các nhãn hàng</h2>
+        <div class="row gx-2 gy-3 brand-list">
+            <div class="col-6 col-md-4 col-lg-2" *ngFor="let brand of brands">
+                <brand-card [brand]="brand"></brand-card>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sản phẩm nổi bật -->
+    <div class="container product-container mb-5 bg-light py-4 rounded">
+        <h2 class="mb-4 text-start">Sản phẩm nổi bật</h2>
+        <div class="row g-3 category-list">
+            <div class="col-6 col-md-4 col-lg-2" *ngFor="let product of products">
+                <product-card [product]="product"></product-card>
+            </div>
+        </div>
+    </div>
+</div>

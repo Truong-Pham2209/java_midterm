@@ -1,0 +1,118 @@
+<div class="container mt-4 mb-4">
+    <div class="row g-2 align-items-end justify-content-between">
+        <!-- Nhãn hàng -->
+        <div class="col-6 col-md-2">
+            <label for="brandSelect" class="form-label">Nhãn hàng</label>
+            <select id="brandSelect" class="form-select" [(ngModel)]="filter.brandId">
+                <option [ngValue]="null">Tất cả</option>
+                <option *ngFor="let brand of brands" [value]="brand.id">{{ brand.name }}</option>
+            </select>
+        </div>
+
+        <!-- Phân loại -->
+        <div class="col-6 col-md-2">
+            <label for="categorySelect" class="form-label">Phân loại</label>
+            <select id="categorySelect" class="form-select" [(ngModel)]="filter.categoryId">
+                <option [ngValue]="null">Tất cả</option>
+                <option *ngFor="let category of categories" [value]="category.id">{{ category.name }}</option>
+            </select>
+        </div>
+
+        <!-- Sắp xếp -->
+        <div class="col-6 col-md-2">
+            <label for="sortSelect" class="form-label">Sắp xếp</label>
+            <select id="sortSelect" class="form-select" [(ngModel)]="filter.sort">
+                <option *ngFor="let sort of sortList" [value]="sort.value">{{ sort.label }}</option>
+            </select>
+        </div>
+
+        <!-- Ô tìm kiếm -->
+        <div class="col-6 col-md-4">
+            <label for="searchInput" class="form-label">Tìm kiếm</label>
+            <div class="input-group">
+                <input
+                    type="text"
+                    id="searchInput"
+                    class="form-control"
+                    placeholder="Nhập tên sản phẩm..."
+                    [(ngModel)]="filter.keyword"
+                />
+                <button class="btn btn-primary">
+                    <fa-icon [icon]="iconSearch" (click)="onSearch()"></fa-icon>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container mt-4">
+    <!-- Nút thêm sản phẩm -->
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h4>Danh sách sản phẩm</h4>
+        <button class="btn btn-success" (click)="onAddProduct()">
+            <fa-icon [icon]="faAdd"></fa-icon> Thêm sản phẩm
+        </button>
+    </div>
+
+    <!-- Bảng danh sách sản phẩm -->
+    <div class="table-responsive">
+        <table class="table table-bordered align-middle">
+            <thead class="table-light">
+                <tr>
+                    <th style="width: 80px" class="text-center">Ảnh</th>
+                    <th class="text-center">Tên</th>
+                    <th class="text-center">Giá</th>
+                    <th class="text-center">Tồn kho</th>
+                    <th class="text-center">Nhãn hàng</th>
+                    <th class="text-center">Danh mục</th>
+                    <th style="width: 120px">Thao tác</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let product of products">
+                    <td
+                        class="d-flex justify-content-center align-items-center"
+                        style="width: 60px; height: 60px; overflow: hidden"
+                    >
+                        <img
+                            [src]="getImageUrl(product.image)"
+                            [alt]="product.name"
+                            [title]="product.name"
+                            class="img-fluid"
+                            style="object-fit: cover; width: 100%; height: 100%"
+                        />
+                    </td>
+                    <td>{{ product.name }}</td>
+                    <td>{{ product.price | number }} đ</td>
+                    <td>{{ product.stock }}</td>
+                    <td>{{ product.brand.name }}</td>
+                    <td>{{ product.category.name }}</td>
+                    <td class="text-center">
+                        <button class="btn btn-sm btn-primary me-1" (click)="onEditProduct(product)">
+                            <fa-icon [icon]="faEdit"></fa-icon>
+                        </button>
+                        <button class="btn btn-sm btn-danger" (click)="onDeleteProduct(product)">
+                            <fa-icon [icon]="faDelete"></fa-icon>
+                        </button>
+                    </td>
+                </tr>
+                <tr *ngIf="products.length === 0">
+                    <td colspan="7" class="text-center text-muted">Không có sản phẩm nào</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Nút xem thêm -->
+    <div class="d-flex justify-content-center mt-3">
+        <button
+            *ngIf="filter.page < totalPages - 1 && !loadingMore"
+            class="btn btn-outline-primary"
+            (click)="loadMore()"
+            [disabled]="loadingMore"
+        >
+            <fa-icon *ngIf="loadingMore" [icon]="faLoading" class="me-2"></fa-icon>
+            Xem thêm
+        </button>
+    </div>
+</div>

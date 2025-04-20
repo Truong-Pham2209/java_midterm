@@ -1,0 +1,26 @@
+<div class="d-flex border rounded shadow-sm p-3 mb-3">
+    <!-- Ảnh sản phẩm -->
+    <div class="me-3">
+        <img
+            [src]="image"
+            alt="Product Image"
+            class="img-thumbnail"
+            style="width: 120px; height: 120px; object-fit: cover"
+        />
+    </div>
+
+    <!-- Thông tin sản phẩm -->
+    <div class="flex-grow-1">
+        <h5 class="mb-2">{{ order.productName }}</h5>
+
+        <p class="mb-1 text-muted">
+            {{ order.price | number }} × {{ order.quantity }} =
+            <strong class="text-dark ms-1"> {{ getTotalPrice(order) | number }} VND </strong>
+        </p>
+
+        <p class="mb-0">
+            <fa-icon [icon]="faAddress"></fa-icon>
+            {{ order.address }}
+        </p>
+    </div>
+</div>

@@ -1,0 +1,30 @@
+<div class="container my-4">
+    <h3 class="mb-4 text-primary">Các sản phẩm đã mua</h3>
+
+    <!-- Loading ban đầu -->
+    <div *ngIf="loading && orders.length === 0" class="text-center my-5">
+        <div class="spinner-border text-primary" role="status"></div>
+        <p class="mt-2">Đang tải dữ liệu...</p>
+    </div>
+
+    <!-- Danh sách đơn hàng -->
+    <div *ngIf="orders.length > 0">
+        <app-order-item *ngFor="let order of orders" [order]="order" class="mb-3"></app-order-item>
+    </div>
+
+    <!-- Không có đơn hàng -->
+    <div *ngIf="!loading && orders.length === 0" class="text-center text-muted">
+        <p>Không có đơn hàng nào.</p>
+    </div>
+
+    <!-- Nút tải thêm -->
+    <div *ngIf="!loading && page < totalPages - 1" class="text-center mt-4">
+        <button class="btn btn-outline-primary" (click)="loadMore()">Tải thêm</button>
+    </div>
+
+    <!-- Đang tải thêm -->
+    <div *ngIf="loading && orders.length > 0" class="text-center mt-3">
+        <div class="spinner-border text-secondary" role="status"></div>
+        <p class="mt-2">Đang tải thêm đơn hàng...</p>
+    </div>
+</div>

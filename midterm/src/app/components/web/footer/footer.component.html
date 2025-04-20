@@ -1,0 +1,29 @@
+<div class="container">
+    <div class="intro">
+        <div class="logo">
+            <img src="/images/logo.png" alt="Logo" class="logo-img" />
+        </div>
+        <div class="description">
+            Shop bán hàng công nghệ uy tín hàng đầu tại Việt Nam. Chúng tôi cung cấp các sản phẩm công nghệ chính hãng
+            với chất lượng tốt nhất và dịch vụ khách hàng tận tâm nhất.
+        </div>
+    </div>
+    <div class="link">
+        <div class="header-list">Liên kết nhanh</div>
+        <ul>
+            <li *ngFor="let item of links" class="link-item">
+                <fa-icon [icon]="faCaretRight"></fa-icon>
+                <a [routerLink]="item.redirectTo" class="link-item">{{ item.text }}</a>
+            </li>
+        </ul>
+    </div>
+    <div class="contact">
+        <div class="header-list">Liên hệ với chúng tôi</div>
+        <ul>
+            <li *ngFor="let item of contacts" class="link-item">
+                <fa-icon [icon]="item.icon"></fa-icon>
+                <span>{{ item.text }}</span>
+            </li>
+        </ul>
+    </div>
+</div>

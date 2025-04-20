@@ -1,0 +1,83 @@
+<div class="container py-4">
+    <div class="row g-4 align-items-stretch my-2">
+        <!-- FORM -->
+        <div class="col-md-4 d-flex height-50vh">
+            <div class="card flex-fill shadow-sm">
+                <div class="card-body d-flex flex-column">
+                    <h5 class="card-title mb-3">
+                        {{ editingBrand ? 'Cập nhật nhãn hàng' : 'Thêm nhãn hàng mới' }}
+                    </h5>
+
+                    <form (ngSubmit)="onSubmit()" #brandForm="ngForm">
+                        <div class="d-flex flex-column gap-3">
+                            <div>
+                                <label class="form-label">Tên nhãn hàng</label>
+                                <input type="text" class="form-control" [(ngModel)]="brand.name" name="name" required />
+                            </div>
+
+                            <div>
+                                <input
+                                    type="file"
+                                    class="d-none"
+                                    #fileInput
+                                    accept="image/*"
+                                    (change)="onImageSelected($event)"
+                                />
+                                <button type="button" class="btn btn-primary me-3" (click)="fileInput.click()">
+                                    Chọn ảnh
+                                </button>
+                                <span *ngIf="selectedFile">{{ selectedFile.name }}</span>
+                            </div>
+
+                            <button type="submit" class="btn btn-success w-100">
+                                {{ editingBrand ? 'Cập nhật' : 'Thêm mới' }}
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- TABLE -->
+        <div class="col-md-8 d-flex height-50vh">
+            <div class="card flex-fill shadow-sm d-flex flex-column">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h5 class="mb-0">Danh sách nhãn hàng</h5>
+                    <button class="btn btn-success btn-sm" (click)="resetForm()">+ Thêm</button>
+                </div>
+
+                <div class="card-body p-0 overflow-auto" style="max-height: 500px">
+                    <table class="table table-hover table-sm mb-0 align-middle text-center">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Ảnh</th>
+                                <th>Tên</th>
+                                <th>Hành động</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let item of brands">
+                                <td>
+                                    <img
+                                        [src]="getImageUrl(item.image)"
+                                        alt="{{ item.name }}"
+                                        class="img-thumbnail"
+                                        style="height: 40px; width: 40px; object-fit: contain"
+                                    />
+                                </td>
+                                <td>{{ item.name }}</td>
+                                <td>
+                                    <button class="btn btn-warning btn-sm me-1" (click)="editBrand(item)">✏️</button>
+                                    <button class="btn btn-danger btn-sm" (click)="deleteBrand(item)">🗑️</button>
+                                </td>
+                            </tr>
+                            <tr *ngIf="brands.length === 0">
+                                <td colspan="3" class="text-muted">Chưa có nhãn hàng nào.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

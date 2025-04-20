@@ -1,0 +1,66 @@
+<div class="container mt-4 mb-4">
+    <div class="row g-2 align-items-end justify-content-between">
+        <!-- Nhãn hàng -->
+        <div class="col-6 col-md-2">
+            <label for="brandSelect" class="form-label">Nhãn hàng</label>
+            <select id="brandSelect" class="form-select" [(ngModel)]="filter.brandId">
+                <option [ngValue]="null">Tất cả</option>
+                <option *ngFor="let brand of brands" [value]="brand.id">{{ brand.name }}</option>
+            </select>
+        </div>
+
+        <!-- Phân loại -->
+        <div class="col-6 col-md-2">
+            <label for="categorySelect" class="form-label">Phân loại</label>
+            <select id="categorySelect" class="form-select" [(ngModel)]="filter.categoryId">
+                <option [ngValue]="null">Tất cả</option>
+                <option *ngFor="let category of categories" [value]="category.id">{{ category.name }}</option>
+            </select>
+        </div>
+
+        <!-- Sắp xếp -->
+        <div class="col-6 col-md-2">
+            <label for="sortSelect" class="form-label">Sắp xếp</label>
+            <select id="sortSelect" class="form-select" [(ngModel)]="filter.sort">
+                <option *ngFor="let sort of sortList" [value]="sort.value">{{ sort.label }}</option>
+            </select>
+        </div>
+
+        <!-- Ô tìm kiếm -->
+        <div class="col-6 col-md-4">
+            <label for="searchInput" class="form-label">Tìm kiếm</label>
+            <div class="input-group">
+                <input
+                    type="text"
+                    id="searchInput"
+                    class="form-control"
+                    placeholder="Nhập tên sản phẩm..."
+                    [(ngModel)]="filter.keyword"
+                    (keyup.enter)="searchProducts()"
+                />
+                <button class="btn btn-primary" (click)="searchProducts()">
+                    <fa-icon [icon]="iconSearch"></fa-icon>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Danh sách sản phẩm -->
+<div class="container mt-4">
+    <h2>Hiển thị kết quả cho '{{ filter.keyword }}'</h2>
+
+    <div class="row g-3">
+        <div class="col-6 col-md-4 col-lg-2" *ngFor="let product of products">
+            <product-card [product]="product"></product-card>
+        </div>
+    </div>
+
+    <!-- Nút tải thêm -->
+    <div class="text-center mt-4" *ngIf="filter.page < totalPages - 1">
+        <button class="btn btn-outline-primary mb-4" (click)="loadMore()" [disabled]="loadingMore">
+            <ng-container *ngIf="!loadingMore">Tải thêm</ng-container>
+            <ng-container *ngIf="loadingMore"> <fa-icon [icon]="faSpinner"></fa-icon> Đang tải... </ng-container>
+        </button>
+    </div>
+</div>

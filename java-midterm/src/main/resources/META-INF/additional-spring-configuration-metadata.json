@@ -1,0 +1,19 @@
+{
+	"properties": [
+		{
+			"name": "spring.jwt.secret_key",
+			"type": "java.lang.String",
+			"description": "Jwt secret key generated with HS256"
+		},
+		{
+			"name": "spring.jwt.ttl.refresh",
+			"type": "java.lang.Long",
+			"description": "Refresh time to live (expire time)"
+		},
+		{
+			"name": "spring.jwt.ttl.access",
+			"type": "java.lang.Long",
+			"description": "Access time to live (expire time)"
+		}
+	]
+}

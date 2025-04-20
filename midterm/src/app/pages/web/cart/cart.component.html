@@ -1,0 +1,81 @@
+<div class="container py-4">
+    <h3 class="mb-4">🛒 Giỏ hàng của bạn</h3>
+
+    <!-- TABLE GIỎ HÀNG -->
+    <div class="card mb-4 shadow-sm">
+        <div class="card-body p-0">
+            <table class="table align-middle mb-0 text-center">
+                <thead class="table-light">
+                    <tr>
+                        <th>Sản phẩm</th>
+                        <th>Giá gốc</th>
+                        <th>Giá sau giảm</th>
+                        <th>Số lượng</th>
+                        <th>Tổng</th>
+                        <th>Xóa</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of orders">
+                        <td class="d-flex align-items-center gap-2 text-start">
+                            <img
+                                src="/images/product.jpg"
+                                alt="{{ item.productName }}"
+                                class="img-thumbnail object-fit-cover rounded"
+                                style="width: 60px; height: 60px"
+                            />
+
+                            <span>{{ item.productName }}</span>
+                        </td>
+                        <td>{{ item.price | number }}₫</td>
+                        <td>{{ getDiscountedPrice(item) | number }}₫</td>
+                        <td>
+                            <div class="d-flex justify-content-center align-items-center gap-2">
+                                <button class="btn btn-outline-secondary btn-sm" (click)="decrease(item)">−</button>
+                                <span>{{ item.quantity }}</span>
+                                <button class="btn btn-outline-secondary btn-sm" (click)="increase(item)">+</button>
+                            </div>
+                        </td>
+                        <td>{{ getDiscountedPrice(item) * item.quantity | number }}₫</td>
+                        <td>
+                            <button class="btn btn-outline-danger btn-sm" (click)="remove(item)">🗑️</button>
+                        </td>
+                    </tr>
+                    <tr *ngIf="orders.length === 0">
+                        <td colspan="6" class="text-muted">Không có sản phẩm nào trong giỏ hàng.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- PHẦN CHECKOUT -->
+    <div class="card shadow-sm" *ngIf="orders.length > 0">
+        <div class="card-body">
+            <h5 class="mb-3">Thông tin đơn hàng</h5>
+
+            <div *ngFor="let item of orders" class="d-flex justify-content-between mb-2">
+                <div>{{ item.productName }}:</div>
+                <div>
+                    {{ getDiscountedPrice(item) | number }}₫ x {{ item.quantity }} =
+                    <strong>{{ getDiscountedPrice(item) * item.quantity | number }}₫</strong>
+                </div>
+            </div>
+
+            <hr />
+            <div class="d-flex justify-content-between fs-5 fw-semibold mb-4">
+                <div>Thành tiền:</div>
+                <div>{{ getTotal() | number }}₫</div>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Địa chỉ nhận hàng</label>
+                <input type="text" class="form-control" [(ngModel)]="address" placeholder="Nhập địa chỉ giao hàng..." />
+            </div>
+
+            <button class="btn btn-success w-100 mt-3" [disabled]="!canCheckout()" (click)="checkout()">
+                Thanh toán
+            </button>
+        </div>
+    </div>
+</div>

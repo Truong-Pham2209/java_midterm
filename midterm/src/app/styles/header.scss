@@ -1,0 +1,39 @@
+.header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    background-color: #588157;
+}
+
+.container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    max-width: 90%;
+    padding: 0 20px;
+
+    a {
+        text-decoration: none;
+        color: inherit;
+        font-size: 18px;
+        font-weight: 500;
+
+        fa-icon {
+            margin-right: 5px;
+        }
+
+        &:hover {
+            color: #17a2b8;
+        }
+    }
+}
+
+.logo {
+    img {
+        max-height: 50px;
+        object-fit: contain;
+    }
+}

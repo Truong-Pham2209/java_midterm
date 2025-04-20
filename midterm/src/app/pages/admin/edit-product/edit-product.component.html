@@ -1,0 +1,77 @@
+<div class="container m-5">
+    <h3>{{ isUpdate ? 'Cập nhật sản phẩm' : 'Thêm sản phẩm mới' }}</h3>
+
+    <form (ngSubmit)="save()" [formGroup]="form">
+        <!-- Tên sản phẩm -->
+        <div class="mb-3">
+            <label class="form-label">Tên sản phẩm</label>
+            <input class="form-control" formControlName="name" />
+            <div *ngIf="f['name'].hasError('nonEmpty') && f['name'].touched" class="text-danger">
+                Tên sản phẩm không được để trống hoặc chỉ chứa khoảng trắng
+            </div>
+        </div>
+
+        <!-- Mô tả -->
+        <div class="mb-3">
+            <label class="form-label">Mô tả</label>
+            <textarea class="form-control" formControlName="description"></textarea>
+            <div *ngIf="f['description'].hasError('nonEmpty') && f['description'].touched" class="text-danger">
+                Mô tả không được để trống hoặc chỉ chứa khoảng trắng
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- Giá gốc -->
+            <div class="col-md-4 mb-3">
+                <label class="form-label">Giá gốc</label>
+                <input type="number" class="form-control" formControlName="price" [min]="1000" />
+                <div class="text-danger" *ngIf="f['price'].invalid && f['price'].touched">Giá gốc phải ≥ 1.000</div>
+            </div>
+
+            <!-- Giảm giá -->
+            <div class="col-md-4 mb-3">
+                <label class="form-label">Giảm giá</label>
+                <input type="number" class="form-control" formControlName="discount" />
+                <div class="text-danger" *ngIf="f['discount'].invalid && f['discount'].touched">
+                    Giảm giá phải từ 0 đến 99
+                </div>
+            </div>
+
+            <!-- Tồn kho -->
+            <div class="col-md-4 mb-3">
+                <label class="form-label">Tồn kho</label>
+                <input type="number" class="form-control" formControlName="stock" />
+                <div class="text-danger" *ngIf="f['stock'].invalid && f['stock'].touched">Tồn kho phải ≥ 0</div>
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- Danh mục -->
+            <div class="col-md-6 mb-3">
+                <label class="form-label">Danh mục</label>
+                <select class="form-select" formControlName="categoryId">
+                    <option *ngFor="let c of categories" [value]="c.id">{{ c.name }}</option>
+                </select>
+            </div>
+
+            <!-- Nhãn hàng -->
+            <div class="col-md-6 mb-3">
+                <label class="form-label">Nhãn hàng</label>
+                <select class="form-select" formControlName="brandId">
+                    <option *ngFor="let b of brands" [value]="b.id">{{ b.name }}</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- Ảnh -->
+        <div class="mb-3">
+            <input type="file" class="d-none" #fileInput accept="image/*" (change)="onFileChange($event)" />
+            <button type="button" class="btn btn-primary me-3" (click)="fileInput.click()">Chọn ảnh</button>
+            <span *ngIf="file">{{ file.name }}</span>
+        </div>
+
+        <button class="btn btn-success" type="submit" [disabled]="form.invalid">
+            {{ isUpdate ? 'Cập nhật' : 'Thêm mới' }}
+        </button>
+    </form>
+</div>

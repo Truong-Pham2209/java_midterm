@@ -1,0 +1,60 @@
+<div class="container my-4">
+    <div class="row">
+        <!-- Ảnh sản phẩm -->
+        <div class="col-md-6 mb-4">
+            <img [src]="image" alt="Product Image" class="product-image img-fluid rounded shadow" />
+        </div>
+
+        <!-- Thông tin sản phẩm -->
+        <div class="col-md-6">
+            <h2 class="mb-3">{{ product.name }}</h2>
+            <p>{{ product.description }}</p>
+
+            <p class="fw-bold" [ngClass]="{ 'text-danger': product.stock === 0, 'text-success': product.stock > 0 }">
+                Trạng thái:
+                <span *ngIf="product.stock > 0">Còn hàng (trong kho: {{ product.stock }})</span>
+                <span *ngIf="product.stock === 0">Hết hàng</span>
+            </p>
+
+            <p><strong>Danh mục:</strong> {{ product.category.name }}</p>
+            <p><strong>Thươg hiệu:</strong> {{ product.brand.name }}</p>
+            <p><strong>Chính sách:</strong>Hoàn tiền nếu có lỗi từ nhà sản xuất trong vòng 30 ngày</p>
+
+            <!-- Giá -->
+            <div class="my-3">
+                <ng-container *ngIf="product.discount > 0; else normalPrice">
+                    <h4 class="text-danger">
+                        {{ discountedPrice | currency: 'VND' }}
+                        <small class="text-decoration-line-through text-muted ms-2">{{
+                            product.price | currency: 'VND'
+                        }}</small>
+                        <span class="badge bg-success ms-2">{{ product.discount }}% OFF</span>
+                    </h4>
+                </ng-container>
+                <ng-template #normalPrice>
+                    <h4 class="text-primary">{{ product.price | currency: 'VND' }}</h4>
+                </ng-template>
+            </div>
+
+            <div class="row text-center my-4">
+                <div class="col-4">
+                    <fa-icon [icon]="faMoney" size="2x" class="text-success mb-2"></fa-icon>
+                    <div class="fw-semibold text-success">Cash On Delivery</div>
+                </div>
+                <div class="col-4">
+                    <fa-icon [icon]="faReturn" size="2x" class="text-danger mb-2"></fa-icon>
+                    <div class="fw-semibold text-danger">Return Available</div>
+                </div>
+                <div class="col-4">
+                    <fa-icon [icon]="faShipping" size="2x" class="text-primary mb-2"></fa-icon>
+                    <div class="fw-semibold text-primary">Free Shipping</div>
+                </div>
+            </div>
+
+            <!-- Nút thêm vào giỏ hàng -->
+            <button class="btn btn-primary w-100" (click)="addToCart()" [disabled]="product.stock === 0">
+                Thêm vào giỏ hàng
+            </button>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,15 @@
+<div class="card card-hover h-100 w-100 border-0 shadow-sm" (click)="onClick()">
+    <img
+        [src]="getImageUrl()"
+        alt="{{ product.name }}"
+        class="card-img-top img-thumbnail object-fit-cover img-fluid w-100"
+        style="height: 150px; object-fit: cover"
+    />
+    <div class="card-body">
+        <h6 class="card-title text-truncate">{{ product.name }}</h6>
+        <div class="text-danger fw-bold">{{ getDiscountedPrice() }} đ</div>
+        <small class="text-decoration-line-through text-muted" *ngIf="product.discount > 0"
+            >{{ product.price }} đ</small
+        >
+    </div>
+</div>
